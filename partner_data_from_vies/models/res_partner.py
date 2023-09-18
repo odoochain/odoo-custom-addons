@@ -1,5 +1,6 @@
 # Copyright (C) 2015 Forest and Biomass Romania
 # Copyright (C) 2020 OdooERP Romania
+# Copyright © 2021 Didotech srl
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -25,7 +26,7 @@ class ResPartner(models.Model):
             return False
 
         # Raise error if partner is not listed on Vies
-        if hasattr(result, 'company_name') and result.company_name:
+        if hasattr(result, 'company_name') and result.company_name and not result.company_address[:3] == '***':
             address_values = hasattr(result, 'company_address') and result.company_address.split('\n')
             values = {
                 'name': result.company_name.title().replace('!', ' ')
@@ -49,14 +50,30 @@ class ResPartner(models.Model):
             if country:
                 values["country_id"] = country[0].id
 
+            # address_value should consist of at least 2 elements
             if country_code == 'IT':
-                code_state = address_values[1][-2:]
-                state = self.env['res.country.state'].search([
-                    ("code", "ilike", code_state),
-                    ("country_id", '=', country.id)
-                ])
-                if state:
-                    values["state_id"] = state[0].id
+
+                if address_values == ['SOGGETTO IDENTIFICATO MA NON RESIDENTE IN ITALIA']:
+                    _logger.warning(
+                        f'Not updating address infos for "{vat}" '
+                        'since VIES returned this message '
+                        '"SOGGETTO IDENTIFICATO MA NON RESIDENTE IN ITALIA".'
+                    )
+                elif len(address_values) >= 2:
+                    code_state = address_values[1][-2:]
+                    state = self.env['res.country.state'].search([
+                        ("code", "ilike", code_state),
+                        ("country_id", '=', country.id)
+                    ])
+                    if state:
+                        values["state_id"] = state[0].id
+                    # end if
+                else:
+                    _logger.warning(
+                        f'Not updating address infos for "{vat}" '
+                        f'since VIES returned unsupported data.'
+                    )
+                # end if
 
             return values
         else:
@@ -74,5 +91,14 @@ class ResPartner(models.Model):
     @api.onchange("vat")
     def vies_vat_change(self):
         if self.vat:
+
             result = self.get_vies_data()
-            self.update(result)
+
+            # Check content of the "result" variable before calling update:
+            # if and Exception is raised while contacting VIES server the
+            # get_vies_data() method returns False
+            if result:
+                self.update(result)
+            # end if
+        # end if
+    # end vies_vat_change

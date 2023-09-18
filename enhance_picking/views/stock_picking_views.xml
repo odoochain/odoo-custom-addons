@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_inject_ddt_form_inherit" model="ir.ui.view">
+        <field name="name">delivery.stock.inject_ddt.form.view.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <field name="delivery_count" invisible="1"/>
+                <button class="oe_stat_button"
+                		string="TD View"
+                		type="object"
+                        name="show_transport_documents"
+                        icon="fa-truck"
+                        attrs="{'invisible': [('delivery_count', '=', 0)]}"
+                        >
+                </button>
+            </div>
+            <xpath expr="//button[@name='action_cancel']" position="before">
+                <button name="prepare_validation" string="Prepare validation" attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" type="object" groups="stock.group_stock_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="l10n_it_ddt.stock_picking_tree_ddt" model="ir.ui.view">
+        <field name="name">stock.picking.tree.ddt</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                    <field name="ddt_ids" string="TD" widget="many2many_tags" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
+    

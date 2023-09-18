@@ -1,19 +1,18 @@
-# ©  2020 Didotech srl
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
+# ©  2020-2021 Didotech srl
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Automatic partner creation based on VAT number",
-    "summary": "Using VIES webservice, name and address information will "
-    "be fetched and added to the partner.",
-    "version": "12.0.1.2.0",
-    "depends": [
-        "base_vat"
+    'name': 'Automatic partner creation based on VAT number',
+    'version': '12.0.1.4.1',
+    'category': 'Customer Relationship Management',
+    'summary': 'Using VIES webservice, name and address information will be fetched and added to the partner.',
+    'author': 'powERP enterprise network',
+    'website': 'https://www.powerp.it',
+    'development_status': 'Alpha',
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
     ],
-    "category": "Customer Relationship Management",
-    "author": "Didotech srl",
-    "website": "https://github.com/LibrERP/custom-addons",
-    "license": "AGPL-3",
-    "application": False,
-    "installable": True,
-    "auto_install": False,
+    'installable': True,
+    'application': False,
+    'auto_install': False,
 }

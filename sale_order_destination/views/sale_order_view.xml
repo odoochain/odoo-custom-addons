@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_destination_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="partner_shipping_name" />
+            </field>
+        </field>
+    </record>
+    <record id="view_quotation_destination_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="partner_shipping_name" />
+            </field>
+        </field>
+    </record>
+    <record id="sale_order_destination_search_inherit_quotation" model="ir.ui.view">
+        <field name="name">sale.order.destination.search.quotation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="partner_shipping_name" string="Destination"
+                       filter_domain="['|', '|', ('partner_shipping_id.name', 'ilike', self), ('partner_shipping_id.city', 'ilike', self), ('partner_shipping_id.street', 'ilike', self)]"/>
+            </field>
+        </field>
+    </record>
+    <record id="sale_order_destination_search_inherit_sale" model="ir.ui.view">
+        <field name="name">sale.order.destination.search.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="partner_shipping_name" string="Destination"
+                       filter_domain="['|', '|', ('partner_shipping_id.name', 'ilike', self), ('partner_shipping_id.city', 'ilike', self), ('partner_shipping_id.street', 'ilike', self)]"/>
+            </field>
+        </field>
+    </record>
+</odoo>

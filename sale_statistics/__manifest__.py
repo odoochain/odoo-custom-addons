@@ -23,40 +23,13 @@
 ############################################################################
 {
     'name': 'Sale Statistics',
-    'version': '12.0.3.0',
-    "author": "Didotech srl",
+    'version': '12.0.6.0',
     'category': 'Business Analisys',
-    'description': """
-Sales Statistics
-================
-
-Sales Statistics module that covers:
-------------------------------------
-    * Sale Orders
-    * Sale Volumes
-
-Creates a dashboard for accountants that includes:
---------------------------------------------------
-    * Sales organized by Year, Quarter, Month, Week
-    * Sales grouped by Salesman
-    * Sales grouped by Customer
-    * Sales grouped by Country, Region, Province
-    * Sales grouped by Product Template
-    * Sales grouped by Product
-
-Authors:
---------
-    * Didotech srl
-
-Contributors:
--------------
-    * Fabio Colognesi
-
-    """,
-    'website': 'http://www.didotech.com',
-    'depends': [
-        'sale',
-    ],
+    'author': 'powERP enterprise network',
+    'website': 'https://www.powerp.it',
+    'development_status': 'Alpha',
+    'license': 'LGPL-3',
+    'depends': ['sale', 'sale_stock', 'sale_margin'],
     'data': [
         'security/sale_statistics.xml',
         'security/account_security.xml',
@@ -67,15 +40,8 @@ Contributors:
         'report/sale_report_view.xml',
         'data/scheduled_action.xml',
         'views/board_view.xml',
-    ],
-    'qweb': [
-    ],
-    'demo': [
-    ],
-    'test': [
+        'views/partner_view.xml',
     ],
     'installable': True,
     'auto_install': False,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
