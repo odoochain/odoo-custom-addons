@@ -26,7 +26,7 @@
                     <field name="latest_version" />
                 </field>
                 <field name="state" position="after">
-                    <button name="button_upgrade" states="installed" string="Upgrade" class="btn btn-primary me-1" type="object" groups="base.group_system"/>
+                    <button name="button_upgrade" states="installed" string="Upgrade" icon="fa-refresh" class="btn btn-primary me-1" type="object" groups="base.group_system"/>
                     <button name="button_upgrade_cancel" states="to upgrade" string="Cancel Upgrade" class="btn btn-secondary me-1"  type="object" groups="base.group_system"/>
                 </field>
             </field>
